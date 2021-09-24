@@ -18,7 +18,8 @@ const app = Express();
 
     //Rotas
     app.get('/', function(req, res){
-        Post.findAll().then(function(posts){
+        //{order: [['id', 'DESC']]} = ordem de postagem recente p/ antiga (ASC = antiga p/ recente)
+        Post.findAll({order: [['id', 'DESC']]}).then(function(posts){
             res.render('layouts/home', {posts: posts})
         });
      
