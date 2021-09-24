@@ -1,19 +1,25 @@
 const Express = require('express');
-const Sequelize = require('sequelize')
+const Sequelize = require('sequelize');
+const Handlebars = require('express-handlebars');
 
-const app = Express()
-const sequelize = new Sequelize('sistemadecadastro', 'root', '123456', {
-    host: 'localhost',
-    dialect: 'mysql'
-});
-
-sequelize.authenticate().then(function(){
-    console.log('DB conectado')
-}).catch(function(erro){
-    console.log('Erro ao conectar no DB: ' + erro)
-});
+const app = Express();
 
 
+//Config
+    //Template engine
+    app.engine('handlebars', Handlebars({defaultLayout: 'main'}));
+    app.set('view engine', 'handlebars');
+    
+    //Conexão DB
+    const sequelize = new Sequelize('sistemadecadastro', 'root', '123456', {
+        host: 'localhost',
+        dialect: 'mysql'
+    });
+    sequelize.authenticate().then(function(){
+        console.log('DB conectado')
+    }).catch(function(erro){
+        console.log('Erro ao conectar no DB: ' + erro)
+    });
 
 
 
