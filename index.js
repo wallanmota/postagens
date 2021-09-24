@@ -1,7 +1,6 @@
 const Express = require('express');
-const Handlebars = require('express-handlebars');
+const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
-const Sequelize = require('./models/db');
 const Post = require('./models/Post');
 
 
@@ -10,7 +9,7 @@ const app = Express();
 
 //Config
     //Template engine
-    app.engine('handlebars', Handlebars({defaultLayout: 'main'}));
+    app.engine('handlebars', handlebars({defaultLayout: 'main'}));
     app.set('view engine', 'handlebars');
 
     //Body Parser
@@ -19,7 +18,10 @@ const app = Express();
 
     //Rotas
     app.get('/', function(req, res){
-        res.render('layouts/home')
+        Post.findAll().then(function(posts){
+            res.render('layouts/home', {posts: posts})
+        });
+     
     })
 
     app.get('/cadastro', function(req, res){
